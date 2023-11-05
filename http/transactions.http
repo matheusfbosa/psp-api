@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:3000
+@baseUrl = http://localhost:8080
 
 ### Create transaction
 POST {{baseUrl}}/api/v1/transactions
