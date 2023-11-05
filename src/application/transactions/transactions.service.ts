@@ -4,7 +4,9 @@ import { Transaction } from './entities/transaction.entity';
 
 @Injectable()
 export class TransactionsService {
-  constructor(private transactionsRepository: TransactionsRepository) {}
+  constructor(
+    private readonly transactionsRepository: TransactionsRepository,
+  ) {}
 
   async create(transaction: Transaction): Promise<Transaction> {
     const { cardNumber, ...remaining } = transaction;

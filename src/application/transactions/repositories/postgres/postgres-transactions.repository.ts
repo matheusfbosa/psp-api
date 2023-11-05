@@ -6,7 +6,7 @@ import { Transaction } from '../../entities/transaction.entity';
 
 @Injectable()
 export class PostgresTransactionsRepository implements TransactionsRepository {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
   async create(transaction: Transaction): Promise<Transaction> {
     const data = await this.prismaService.transaction.create({
