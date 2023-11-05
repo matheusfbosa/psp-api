@@ -6,3 +6,16 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Transaction {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  value         Decimal
+  description   String
+  paymentMethod String
+  cardNumber    String
+  cardHolder    String
+  cardExpiry    String
+  cvv           String
+  createdAt     DateTime @default(now())
+}
