@@ -8,7 +8,7 @@ describe('TransactionsController (e2e)', () => {
   let app: INestApplication;
   const transactionsService = { findAll: () => ['test'] };
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [TransactionsModule],
     })
@@ -20,7 +20,7 @@ describe('TransactionsController (e2e)', () => {
     await app.init();
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await app.close();
   });
 

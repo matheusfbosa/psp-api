@@ -8,7 +8,7 @@ import { PostgresTransactionsRepository } from './repositories/postgres/postgres
 describe('TransactionsController', () => {
   let controller: TransactionsController;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TransactionsController],
       providers: [

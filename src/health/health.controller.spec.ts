@@ -6,9 +6,9 @@ import { HealthController } from './health.controller';
 describe('HealthController', () => {
   let controller: HealthController;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [TerminusModule, TerminusModule],
+      imports: [TerminusModule],
       controllers: [HealthController],
       providers: [PrismaClient],
     }).compile();
