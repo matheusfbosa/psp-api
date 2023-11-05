@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import { HealthController } from './health.controller';
 
 @Module({
-  imports: [TerminusModule, TerminusModule],
+  imports: [TerminusModule],
   controllers: [HealthController],
   providers: [PrismaClient],
 })
