@@ -5,6 +5,10 @@
   "author": "Matheus Bosa",
   "private": true,
   "license": "UNLICENSED",
+  "engines": {
+    "npm": ">=10.1.0",
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

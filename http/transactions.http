@@ -5,14 +5,14 @@ POST {{baseUrl}}/api/v1/transactions
 Content-Type: application/json
 
 {
+    "userId": 1,
     "value": 1.99,
     "description": "Smartband XYZ 3.0",
     "paymentMethod": "debit_card",
     "cardNumber": "4111111145551142",
     "cardHolder": "Ozzy Osbourne",
     "cardExpiry": "12/23",
-    "cvv": "737",
-    "userId": 2
+    "cvv": "737"
 }
 
 ### List transactions

@@ -6,14 +6,13 @@ import { Transaction } from './entities/transaction.entity';
 
 const transactionFixture: Transaction = {
   userId: 1,
-  value: 100.0,
-  description: 'Test Transaction',
+  value: 1.99,
+  description: 'Smartband XYZ 3.0',
   paymentMethod: 'debit_card',
-  cardNumber: '1234567890123456',
-  cardHolder: 'John Doe',
-  cardExpiry: '12/25',
-  cvv: '123',
-  createdAt: new Date(),
+  cardNumber: '4111111145551142',
+  cardHolder: 'Ozzy Osbourne',
+  cardExpiry: '12/23',
+  cvv: '737',
 };
 
 describe('TransactionsService', () => {
@@ -48,7 +47,7 @@ describe('TransactionsService', () => {
     it('should create a transaction with the last 4 digits of the card number', async () => {
       const expected: Transaction = {
         ...transactionFixture,
-        cardNumber: '3456',
+        cardNumber: '1142',
       };
       (repository.create as jest.Mock).mockResolvedValueOnce(expected);
 
