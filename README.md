@@ -1,30 +1,26 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# psp-api
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A Nest.js project for a simplified Payment Service Provider (PSP). For more information, read [CHALLENGE.md](./CHALLENGE.md).
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Context
 
-## Description
+At its core, a PSP has two very important functions:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+1. Allow our customers to process transactions ("cash-in").
+2. Make payments of receivables to our customers ("cash-out").
+
+## Dependencies
+
+This project utilizes the following technologies and dependencies:
+
+- [Node.js 20.9.0](https://nodejs.org/)
+- [Nest.js](https://nestjs.com/)
+- [Docker](https://www.docker.com/)
+- [PostgreSQL](https://postgresql.org/)
+- [Prisma ORM](https://www.prisma.io/)
+- [Pino](https://getpino.io/)
+
+Make sure to have these dependencies installed to successfully run the project.
 
 ## Installation
 
@@ -58,16 +54,49 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## API Endpoints
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- Create transaction:
 
-## Stay in touch
+```bash
+curl -X POST http://localhost:8080/api/v1/transactions \
+-H "Content-Type: application/json" \
+-d '{
+    "userId": 1,
+    "value": 1.99,
+    "description": "Smartband XYZ 3.0",
+    "paymentMethod": "debit_card",
+    "cardNumber": "4111111145551142",
+    "cardHolder": "Ozzy Osbourne",
+    "cardExpiry": "12/23",
+    "cvv": "737"
+}'
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- List transactions:
 
-## License
+```bash
+curl http://localhost:8080/api/v1/transactions
+```
 
-Nest is [MIT licensed](LICENSE).
+- Get application health:
+
+```bash
+curl http://localhost:8080/health
+```
+
+## Contributing
+
+If you'd like to contribute to this project, please follow these guidelines:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and ensure that the existing tests still pass.
+4. Add new tests for any new features or changes you make.
+5. Submit a pull request to the main repository.
+
+Happy coding!
+
+## Author
+
+- [Matheus Bosa](https://www.linkedin.com/in/matheusfbosa/)

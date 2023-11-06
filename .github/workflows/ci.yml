@@ -1,0 +1,42 @@
+name: ci
+on:
+  pull_request:
+    types: [opened, reopened]
+    paths:
+      - '**'
+      - '!README.md'
+    branches-ignore:
+      - main
+  workflow_dispatch:
+
+jobs:
+  quality-contol:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.9.0]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+
+      - name: Install dependencies
+        run: make install
+
+      - name: Lint code
+        run: make lint
+
+      - name: Run tests
+        run: make test
