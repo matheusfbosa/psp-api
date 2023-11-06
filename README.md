@@ -1,13 +1,13 @@
 # psp-api
 
-A Nest.js project for a simplified Payment Service Provider (PSP). For more information, read [CHALLENGE.md](./CHALLENGE.md).
+A Nest.js project for a simplified Payment Service Provider (PSP). For more information, please read [CHALLENGE.md](./CHALLENGE.md).
 
 ## Context
 
 At its core, a PSP has two very important functions:
 
-1. Allow our customers to process transactions ("cash-in").
-2. Make payments of receivables to our customers ("cash-out").
+1. Allow customers to process transactions ("cash-in").
+2. Make payments of receivables to customers ("cash-out").
 
 ## Dependencies
 
@@ -55,6 +55,8 @@ $ npm run test:cov
 ```
 
 ## API Endpoints
+
+You can view the API documentation through the Swagger endpoint: [localhost:8080/swagger](http://localhost:8080/swagger)
 
 - Create transaction:
 
