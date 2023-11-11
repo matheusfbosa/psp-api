@@ -8,7 +8,12 @@ import {
   IsNumberString,
   Length,
 } from 'class-validator';
-import { PaymentMethod, Transaction } from '../entities/transaction.entity';
+import { Transaction } from '../entities/transaction.entity';
+
+export enum PaymentMethodDto {
+  DebitCard = 'debit_card',
+  CreditCard = 'credit_card',
+}
 
 export class CreateTransactionDto {
   @ApiProperty({ example: 1, description: 'User ID' })
@@ -27,9 +32,9 @@ export class CreateTransactionDto {
   @Length(3, 100)
   description: string;
 
-  @ApiProperty({ enum: PaymentMethod, description: 'Payment method' })
-  @IsEnum(PaymentMethod)
-  paymentMethod: PaymentMethod;
+  @ApiProperty({ enum: PaymentMethodDto, description: 'Payment method' })
+  @IsEnum(PaymentMethodDto)
+  paymentMethod: PaymentMethodDto;
 
   @ApiProperty({ example: '4111111145551142', description: 'Card number' })
   @IsCreditCard()
