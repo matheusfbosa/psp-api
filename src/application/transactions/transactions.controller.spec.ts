@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule } from '@nestjs/config';
+import { getQueueToken } from '@nestjs/bull';
 import { PrismaService } from '../../infrastructure/database/prisma.service';
 import { TransactionsController } from './transactions.controller';
 import { TransactionsService } from './transactions.service';
 import { PaymentsService } from './payments.service';
-import { PayablesService } from '../payables/payables.service';
 import { TransactionsRepository } from './repositories/transactions.repository';
 import { PostgresTransactionsRepository } from './repositories/postgres/postgres-transactions.repository';
 import { PayablesRepository } from '../payables/repositories/payables.repository';
@@ -21,7 +21,13 @@ describe('TransactionsController', () => {
         PrismaService,
         TransactionsService,
         PaymentsService,
-        PayablesService,
+        {
+          provide: getQueueToken('payables-queue'),
+          useValue: {
+            add: jest.fn(),
+            process: jest.fn(),
+          },
+        },
         {
           provide: TransactionsRepository,
           useClass: PostgresTransactionsRepository,

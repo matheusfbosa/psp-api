@@ -27,6 +27,7 @@ This project utilizes the following technologies and dependencies:
 - [PostgreSQL](https://postgresql.org/)
 - [Prisma ORM](https://www.prisma.io/)
 - [Pino](https://getpino.io/)
+- [Bull](https://github.com/OptimalBits/bull)
 
 Make sure to have these dependencies installed to successfully run the project.
 
@@ -72,7 +73,7 @@ $ make test-e2e
 $ make test-cov
 ```
 
-## API Endpoints
+## Resources
 
 You can view the entire API documentation through the Swagger endpoint: [localhost:8080/swagger](http://localhost:8080/swagger)
 
@@ -82,7 +83,7 @@ You can view the entire API documentation through the Swagger endpoint: [localho
 
 ```bash
 curl -X POST http://localhost:8080/api/v1/transactions \
--H "Content-Type: application/json" \
+-H 'Content-Type: application/json' \
 -d '{
     "userId": 1,
     "value": 1.99,
@@ -104,7 +105,7 @@ curl http://localhost:8080/api/v1/transactions
 - Get balance payables:
 
 ```bash
-curl 'http://localhost:8080/api/v1/payables/balance' \
+curl http://localhost:8080/api/v1/payables/balance \
 -H 'userId: 1'
 ```
 

@@ -7,8 +7,8 @@ import { Payable, PayableStatus } from './entities/payable.entity';
 export class PayablesService {
   constructor(private readonly payablesRepository: PayablesRepository) {}
 
-  create(payable: Payable): Promise<Payable> {
-    return this.payablesRepository.create(payable);
+  async create(payable: Payable): Promise<Payable> {
+    return await this.payablesRepository.create(payable);
   }
 
   async getBalance(userId: number): Promise<BalancePayablesVO> {
