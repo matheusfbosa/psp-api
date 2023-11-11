@@ -1,6 +1,7 @@
 import { Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
+import { BullModule } from '@nestjs/bull';
 import { HealthModule } from './infrastructure/health/health.module';
 import { TransactionsModule } from './application/transactions/transactions.module';
 import { PayablesModule } from './application/payables/payables.module';
@@ -17,6 +18,12 @@ import { PayablesModule } from './application/payables/payables.module';
             : undefined,
       },
       exclude: [{ method: RequestMethod.ALL, path: 'health' }],
+    }),
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost',
+        port: 6379,
+      },
     }),
     HealthModule,
     TransactionsModule,

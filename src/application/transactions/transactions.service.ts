@@ -1,15 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
 import { TransactionsRepository } from './repositories/transactions.repository';
 import { Transaction } from './entities/transaction.entity';
 import { PaymentsService } from './payments.service';
-import { PayablesService } from '../payables/payables.service';
 
 @Injectable()
 export class TransactionsService {
+  private readonly logger = new Logger(TransactionsService.name);
+  private readonly processorName = 'processPayable';
+
   constructor(
     private readonly paymentsService: PaymentsService,
-    private readonly payablesService: PayablesService,
     private readonly transactionsRepository: TransactionsRepository,
+    @InjectQueue('payables-queue') private readonly payablesQueue: Queue,
   ) {}
 
   async create(transaction: Transaction): Promise<Transaction> {
@@ -20,7 +24,6 @@ export class TransactionsService {
       cardNumber: lastFourDigits,
     });
 
-    // TODO: payable should be processed async
     this.createPayable(transactionCreated);
 
     return transactionCreated;
@@ -30,10 +33,19 @@ export class TransactionsService {
     return this.transactionsRepository.findMany();
   }
 
-  private createPayable(transaction: Transaction) {
+  private async createPayable(transaction: Transaction) {
     const payable = this.paymentsService
       .getPaymentStrategy(transaction.paymentMethod)
       .calculatePayable(transaction);
-    this.payablesService.create(payable);
+
+    await this.payablesQueue.add(this.processorName, payable, {
+      attempts: 5,
+      backoff: { type: 'exponential' },
+      timeout: 3_000,
+    });
+
+    this.logger.debug(
+      `Payable of transaction ${payable.transactionId} published to payables-queue`,
+    );
   }
 }

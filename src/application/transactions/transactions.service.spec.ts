@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule } from '@nestjs/config';
+import { getQueueToken } from '@nestjs/bull';
 import { TransactionsService } from './transactions.service';
 import { TransactionsRepository } from './repositories/transactions.repository';
 import { PaymentMethod, Transaction } from './entities/transaction.entity';
 import { PaymentsService } from './payments.service';
-import { PayablesService } from '../payables/payables.service';
 
 const transactionFixture: Transaction = {
   userId: 1,
@@ -20,7 +20,6 @@ const transactionFixture: Transaction = {
 describe('TransactionsService', () => {
   let transactionsService: TransactionsService;
   let paymentsService: PaymentsService;
-  let payablesService: PayablesService;
   let transactionsRepository: TransactionsRepository;
 
   beforeAll(async () => {
@@ -30,16 +29,17 @@ describe('TransactionsService', () => {
         TransactionsService,
         PaymentsService,
         {
-          provide: PayablesService,
-          useValue: {
-            create: jest.fn(),
-          },
-        },
-        {
           provide: TransactionsRepository,
           useValue: {
             create: jest.fn(),
             findMany: jest.fn(),
+          },
+        },
+        {
+          provide: getQueueToken('payables-queue'),
+          useValue: {
+            add: jest.fn(),
+            process: jest.fn(),
           },
         },
       ],
@@ -47,7 +47,6 @@ describe('TransactionsService', () => {
 
     transactionsService = module.get<TransactionsService>(TransactionsService);
     paymentsService = module.get<PaymentsService>(PaymentsService);
-    payablesService = module.get<PayablesService>(PayablesService);
     transactionsRepository = module.get<TransactionsRepository>(
       TransactionsRepository,
     );
@@ -56,7 +55,6 @@ describe('TransactionsService', () => {
   it('should be defined', () => {
     expect(transactionsService).toBeDefined();
     expect(paymentsService).toBeDefined();
-    expect(payablesService).toBeDefined();
     expect(transactionsRepository).toBeDefined();
   });
 

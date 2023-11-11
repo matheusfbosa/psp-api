@@ -6,7 +6,7 @@ import { CreateTransactionDto } from './dto/create-transaction.dto';
 @ApiTags('transactions')
 @Controller('api/v1/transactions')
 export class TransactionsController {
-  private readonly logger: Logger = new Logger(TransactionsController.name);
+  private readonly logger = new Logger(TransactionsController.name);
 
   constructor(private readonly transactionsService: TransactionsService) {}
 

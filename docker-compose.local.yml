@@ -24,6 +24,12 @@ services:
     depends_on:
       - postgres
 
+  redis:
+    image: redis:alpine3.18
+    container_name: redis
+    ports:
+      - "6379:6379"
+
 volumes:
   postgres-db:
 
