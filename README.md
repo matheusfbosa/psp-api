@@ -6,8 +6,8 @@ A Nest.js project for a simplified Payment Service Provider (PSP). For more info
 
 At its core, a PSP has two very important functions:
 
-1. Allow customers to process transactions ("cash-in").
-2. Make payments of receivables to customers ("cash-out").
+1. Allow customers to process transactions (`cash-in`).
+2. Make payments of receivables to customers (`cash-out`).
 
 ## Dependencies
 
@@ -41,6 +41,16 @@ $ make start-dev
 $ make start-prod
 ```
 
+## Prisma ORM
+
+```bash
+# open prisma studio
+$ make prisma-studio
+
+# create migration
+$ npx prisma migrate dev --name <migration_name>
+```
+
 ## Test
 
 ```bash
@@ -56,7 +66,9 @@ $ make test-cov
 
 ## API Endpoints
 
-You can view the API documentation through the Swagger endpoint: [localhost:8080/swagger](http://localhost:8080/swagger)
+You can view the entire API documentation through the Swagger endpoint: [localhost:8080/swagger](http://localhost:8080/swagger)
+
+![Swagger](./docs/images/swagger.png)
 
 - Create transaction:
 
