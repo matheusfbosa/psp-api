@@ -9,6 +9,14 @@ At its core, a PSP has two very important functions:
 1. Allow customers to process transactions (`cash-in`).
 2. Make payments of receivables to customers (`cash-out`).
 
+## Architecture
+
+```mermaid
+flowchart LR
+    A(User) --> B(psp-api)
+    B --> C[(PostgreSQL)]
+```
+
 ## Dependencies
 
 This project utilizes the following technologies and dependencies:
