@@ -3,10 +3,12 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { TransactionsModule } from '../src/application/transactions/transactions.module';
 import { TransactionsService } from '../src/application/transactions/transactions.service';
+import { PaymentsService } from '../src/application/transactions/payments.service';
 
 describe('TransactionsController (e2e)', () => {
   let app: INestApplication;
   const transactionsService = { findAll: () => ['test'] };
+  const paymentsService = {};
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -14,6 +16,8 @@ describe('TransactionsController (e2e)', () => {
     })
       .overrideProvider(TransactionsService)
       .useValue(transactionsService)
+      .overrideProvider(PaymentsService)
+      .useValue(paymentsService)
       .compile();
 
     app = moduleFixture.createNestApplication();

@@ -1,0 +1,7 @@
+@baseUrl = http://localhost:8080
+@userId = 1
+
+### Get payables balance
+GET {{baseUrl}}/api/v1/payables/balance
+Content-Type: application/json
+userId: {{userId}}

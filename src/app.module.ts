@@ -1,8 +1,9 @@
 import { Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
-import { HealthModule } from './health/health.module';
+import { HealthModule } from './infrastructure/health/health.module';
 import { TransactionsModule } from './application/transactions/transactions.module';
+import { PayablesModule } from './application/payables/payables.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { TransactionsModule } from './application/transactions/transactions.modu
     }),
     HealthModule,
     TransactionsModule,
+    PayablesModule,
   ],
 })
 export class AppModule {}

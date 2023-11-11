@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { HealthModule } from './../src/health/health.module';
+import { HealthModule } from '../src/infrastructure/health/health.module';
 
 describe('HealthController (e2e)', () => {
   let app: INestApplication;
