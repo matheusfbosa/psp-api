@@ -1,14 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaService } from '../../infrastructure/database/prisma.service';
+import { ConfigModule } from '@nestjs/config';
 import { TransactionsService } from './transactions.service';
 import { TransactionsRepository } from './repositories/transactions.repository';
-import { Transaction } from './entities/transaction.entity';
+import { PaymentMethod, Transaction } from './entities/transaction.entity';
+import { PaymentsService } from './payments.service';
+import { PayablesService } from '../payables/payables.service';
 
 const transactionFixture: Transaction = {
   userId: 1,
-  value: 1.99,
+  value: 100.0,
   description: 'Smartband XYZ 3.0',
-  paymentMethod: 'debit_card',
+  paymentMethod: PaymentMethod.DebitCard,
   cardNumber: '4111111145551142',
   cardHolder: 'Ozzy Osbourne',
   cardExpiry: '12/23',
@@ -16,14 +18,23 @@ const transactionFixture: Transaction = {
 };
 
 describe('TransactionsService', () => {
-  let service: TransactionsService;
-  let repository: TransactionsRepository;
+  let transactionsService: TransactionsService;
+  let paymentsService: PaymentsService;
+  let payablesService: PayablesService;
+  let transactionsRepository: TransactionsRepository;
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [ConfigModule],
       providers: [
-        PrismaService,
         TransactionsService,
+        PaymentsService,
+        {
+          provide: PayablesService,
+          useValue: {
+            create: jest.fn(),
+          },
+        },
         {
           provide: TransactionsRepository,
           useValue: {
@@ -34,13 +45,19 @@ describe('TransactionsService', () => {
       ],
     }).compile();
 
-    service = module.get<TransactionsService>(TransactionsService);
-    repository = module.get<TransactionsRepository>(TransactionsRepository);
+    transactionsService = module.get<TransactionsService>(TransactionsService);
+    paymentsService = module.get<PaymentsService>(PaymentsService);
+    payablesService = module.get<PayablesService>(PayablesService);
+    transactionsRepository = module.get<TransactionsRepository>(
+      TransactionsRepository,
+    );
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
-    expect(repository).toBeDefined();
+    expect(transactionsService).toBeDefined();
+    expect(paymentsService).toBeDefined();
+    expect(payablesService).toBeDefined();
+    expect(transactionsRepository).toBeDefined();
   });
 
   describe('create', () => {
@@ -49,24 +66,28 @@ describe('TransactionsService', () => {
         ...transactionFixture,
         cardNumber: '1142',
       };
-      (repository.create as jest.Mock).mockResolvedValueOnce(expected);
+      (transactionsRepository.create as jest.Mock).mockResolvedValueOnce(
+        expected,
+      );
 
-      const result = await service.create(transactionFixture);
+      const result = await transactionsService.create(transactionFixture);
 
       expect(result).toEqual(expected);
-      expect(repository.create).toHaveBeenCalledWith(expected);
+      expect(transactionsRepository.create).toHaveBeenCalledWith(expected);
     });
   });
 
   describe('findAll', () => {
     it('should return an array of transactions', async () => {
       const expected: Transaction[] = [transactionFixture];
-      (repository.findMany as jest.Mock).mockResolvedValueOnce(expected);
+      (transactionsRepository.findMany as jest.Mock).mockResolvedValueOnce(
+        expected,
+      );
 
-      const result = await service.findAll();
+      const result = await transactionsService.findAll();
 
       expect(result).toEqual(expected);
-      expect(repository.findMany).toHaveBeenCalled();
+      expect(transactionsRepository.findMany).toHaveBeenCalled();
     });
   });
 });

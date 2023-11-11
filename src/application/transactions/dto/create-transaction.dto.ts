@@ -2,15 +2,13 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type, instanceToPlain, plainToInstance } from 'class-transformer';
 import {
   IsCreditCard,
-  IsIn,
+  IsEnum,
   IsInt,
   IsNumber,
   IsNumberString,
   Length,
 } from 'class-validator';
-import { Transaction } from '../entities/transaction.entity';
-
-const paymentMethods = ['debit_card', 'credit_card'];
+import { PaymentMethod, Transaction } from '../entities/transaction.entity';
 
 export class CreateTransactionDto {
   @ApiProperty({ example: 1, description: 'User ID' })
@@ -29,9 +27,9 @@ export class CreateTransactionDto {
   @Length(3, 100)
   description: string;
 
-  @ApiProperty({ enum: paymentMethods, description: 'Payment method' })
-  @IsIn(paymentMethods)
-  paymentMethod: string;
+  @ApiProperty({ enum: PaymentMethod, description: 'Payment method' })
+  @IsEnum(PaymentMethod)
+  paymentMethod: PaymentMethod;
 
   @ApiProperty({ example: '4111111145551142', description: 'Card number' })
   @IsCreditCard()

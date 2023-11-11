@@ -1,6 +1,6 @@
 # psp-api
 
-A Nest.js project for a simplified Payment Service Provider (PSP). For more information, please read [CHALLENGE.md](./CHALLENGE.md).
+A Nest.js project for a simplified Payment Service Provider (PSP). For more information about the coding challenge, please read [CHALLENGE.md](./CHALLENGE.md) or access this [link](https://github.com/pagarme/vagas/blob/master/desafios/software-engineer-backend/README.md).
 
 ## Context
 
@@ -32,26 +32,26 @@ $ npm install
 
 ```bash
 # development
-$ npm run start
+$ make start
 
 # watch mode
-$ npm run start:dev
+$ make start-dev
 
 # production mode
-$ npm run start:prod
+$ make start-prod
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
+$ make test
 
 # e2e tests
-$ npm run test:e2e
+$ make test-e2e
 
 # test coverage
-$ npm run test:cov
+$ make test-cov
 ```
 
 ## API Endpoints
@@ -79,6 +79,13 @@ curl -X POST http://localhost:8080/api/v1/transactions \
 
 ```bash
 curl http://localhost:8080/api/v1/transactions
+```
+
+- Get balance payables:
+
+```bash
+curl 'http://localhost:8080/api/v1/payables/balance' \
+-H 'userId: 1'
 ```
 
 - Get application health:

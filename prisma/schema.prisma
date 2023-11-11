@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Transaction {
-  id            Int      @id @default(autoincrement())
+  id            Int       @id @default(autoincrement())
   userId        Int
   value         Decimal
   description   String
@@ -17,5 +17,15 @@ model Transaction {
   cardHolder    String
   cardExpiry    String
   cvv           String
-  createdAt     DateTime @default(now())
+  createdAt     DateTime  @default(now())
+  payables      Payable[]
+}
+
+model Payable {
+  id            Int         @id @default(autoincrement())
+  transaction   Transaction @relation(fields: [transactionId], references: [id])
+  transactionId Int
+  status        String
+  paymentDate   DateTime
+  value         Decimal
 }

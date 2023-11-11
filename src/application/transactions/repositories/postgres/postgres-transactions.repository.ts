@@ -2,7 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { Transaction as PrismaTransaction } from '@prisma/client';
 import { TransactionsRepository } from '../transactions.repository';
 import { PrismaService } from '../../../../infrastructure/database/prisma.service';
-import { Transaction } from '../../entities/transaction.entity';
+import {
+  Transaction,
+  getPaymentMethodFromString,
+} from '../../entities/transaction.entity';
 
 @Injectable()
 export class PostgresTransactionsRepository implements TransactionsRepository {
@@ -35,7 +38,7 @@ export class PostgresTransactionsRepository implements TransactionsRepository {
       userId: data.userId,
       value: data.value.toNumber(),
       description: data.description,
-      paymentMethod: data.paymentMethod,
+      paymentMethod: getPaymentMethodFromString(data.paymentMethod),
       cardNumber: data.cardNumber,
       cardHolder: data.cardHolder,
       cardExpiry: data.cardExpiry,

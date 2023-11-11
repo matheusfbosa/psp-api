@@ -10,6 +10,9 @@ docker-local-up:
 docker-local-down:
 	docker compose -f docker-compose.local.yml down
 
+prisma-studio:
+	npx prisma studio
+
 format:
 	npm run format
 
@@ -41,8 +44,9 @@ help:
 	@echo "Available targets:"
 	@echo "  install         	- Install project dependencies"
 	@echo "  build           	- Compile the project"
-	@echo "  docker-local-up	- Start Docker containers for the local environment"
-	@echo "  docker-local-down	- Stop and remove Docker containers for the local environment"
+	@echo "  docker-local-up	- Start Docker containers for local environment"
+	@echo "  docker-local-down	- Stop and remove Docker containers for local environment"
+	@echo "  prisma-studio		- Open Prisma ORM Studio"
 	@echo "  format          	- Apply code formatting"
 	@echo "  lint            	- Run code linter"
 	@echo "  start           	- Start the application in production mode"
